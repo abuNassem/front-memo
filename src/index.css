@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+
+/* Scrollbar Style */
+#chosen-products::-webkit-scrollbar {
+  width: 6px;
+}
+#chosen-products {
+  scrollbar-width: thin; /* or auto */
+  scrollbar-color: #60a5fa #e5e7eb; /* thumb, track */
+  
+}
+
+#chosen-products::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+#chosen-products::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+#chosen-products::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
