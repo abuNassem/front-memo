@@ -14,12 +14,10 @@ type AddButtonProps = {
 const AddButton: React.FC<AddButtonProps> = ({ id }) => {
   const context = useContext(api);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [localLoading, setLocalLoading] = useState<boolean>(false);
 
   // ✅ دالة إضافة للعربة
   const addToCart = async () => {
-    if (localStorage.getItem("userName")) {
       setLocalLoading(true);
 
       // dispatch للـ reducer
@@ -29,9 +27,7 @@ const AddButton: React.FC<AddButtonProps> = ({ id }) => {
       await dispatch(getChoosen(id));
 
       setLocalLoading(false);
-    } else {
-      navigate("/login");
-    }
+   
   };
 
   return (
