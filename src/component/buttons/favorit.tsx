@@ -37,7 +37,7 @@ const AddToFavorit = ({
           onClick={async () => {
             setLoadingFavo(true);
             await dispatch(actDeleteFavority(id));
-            await dispatch(getAllFavo())
+            await dispatch(getAllFavo(''))
                         setLoadingFavo(false);
           }}
         />

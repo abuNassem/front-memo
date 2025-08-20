@@ -17,6 +17,12 @@ export type TlightProduct = {
   size:string,
   isFavorit:boolean
 }
+type Order = {
+  id: number;
+  title: string;
+  price: number;
+  // ... باقي الخصائص
+};
 export type Tcontext={
    openMenue:boolean,
    setOpenMenue: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,5 +41,5 @@ export type Tcontext={
    isPurchases:boolean,
    setIsPurchases:React.Dispatch<React.SetStateAction<boolean>>,
    setOrdersApi:React.Dispatch<React.SetStateAction<[]>>,
-   ordersApi:[]
+   ordersApi:Order[]
 }
