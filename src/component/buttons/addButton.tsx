@@ -1,30 +1,35 @@
-import React, { useContext, useState } from "react";
-import { useAppDispatch} from "../../store/categories/hooks";
+import { useContext, useState } from "react";
+import { useAppDispatch } from "../../store/categories/hooks";
 import { Button } from "@mui/material";
 import getChoosen from "../../store/cart/act/actGetChosen";
 import { api } from "../../template/layout";
 import { useNavigate } from "react-router-dom";
 import Loader from "../feedback/loading";
-type addButton = {
+
+// ✅ الأفضل تبدأ أسماء الـ types بحرف كبير
+type AddButtonProps = {
   id: number;
 };
 
-const AddButton = ({ id }: addButton) => {
+const AddButton: React.FC<AddButtonProps> = ({ id }) => {
   const context = useContext(api);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [localLoading, setLocalLoading] = useState<boolean>(false);
-  // fun add to cart
-  const addToCart = async () => {
-    
 
+  // ✅ دالة إضافة للعربة
+  const addToCart = async () => {
     if (localStorage.getItem("userName")) {
-      setLocalLoading(true)
+      setLocalLoading(true);
+
+      // dispatch للـ reducer
       dispatch({ type: "cart/addtocart", payload: context?.current });
+
+      // استدعاء async action
       await dispatch(getChoosen(id));
-            setLocalLoading(false)
+
+      setLocalLoading(false);
     } else {
-     
       navigate("/login");
     }
   };

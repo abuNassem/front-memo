@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import FilterForm from './forms/filterForm'
 import { IconButton } from '@mui/material'
 import { MdClose } from 'react-icons/md'

@@ -1,10 +1,19 @@
-import * as React from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
+import * as React from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export default function Loader() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'auto',width:'auto' }}>
-      <CircularProgress  size={20}/>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        minHeight: "100px", // أو 100vh لو بدك يغطي الشاشة كاملة
+      }}
+    >
+      <CircularProgress size={20} />
+    </Box>
   );
 }

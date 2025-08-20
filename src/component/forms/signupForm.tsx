@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext,useState } from "react";
 import { FaLock, FaRegEye, FaUser } from "react-icons/fa6";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { GoEyeClosed } from "react-icons/go";

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 
-const Aboutus= () => {
-   useEffect(()=>{
-     const hash=window.location.hash.substring(1)
-     console.log(hash)
-     const ele=document.getElementById(hash)
-     if(ele){
-      ele.scrollIntoView({behavior:'smooth'})
-     }
-      },[])
+const Aboutus = () => {
+  useEffect(() => {
+    const hash = window.location.hash.substring(1)
+    console.log(hash)
+    const ele = document.getElementById(hash)
+    if (ele) {
+      ele.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
+
   return (
-     <div id='about_us' className="bg-zinc-900 text-white min-h-screen flex flex-col items-center py-10 px-5">
+    <div id='about_us' className="bg-zinc-900 text-white min-h-screen flex flex-col items-center py-10 px-5">
       {/* Title */}
       <h1 className="text-3xl font-bold mb-5 border-b-4 border-blue-500 pb-2">
         About Us
@@ -33,7 +34,7 @@ const Aboutus= () => {
       </div>
 
       {/* Values */}
-      <div id='about_us' className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
         <div className="bg-zinc-800 p-6 rounded-xl shadow-lg hover:scale-105 transition-transform">
           <h2 className="text-xl font-semibold mb-3 text-blue-400">Quality</h2>
           <p className="text-gray-400 text-sm">

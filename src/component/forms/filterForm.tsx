@@ -1,8 +1,31 @@
-import React, { useEffect, useState } from 'react'
+
+import { useEffect, useState, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/categories/hooks'
 import { Tproduct } from '../../store/custom/tproduct'
 import { setFilteredProducts } from '../../store/search&filter/filter'
 import { useNavigate } from 'react-router-dom'
+
+type Filters = {
+  gender: string
+  categories: string
+  maxPrice: string
+  size: string
+  brand: string
+  material: string
+  color: string
+  subcategory: string
+}
+
+const initialFilters: Filters = {
+  gender: '',
+  categories: '',
+  maxPrice: '',
+  size: '',
+  brand: '',
+  material: '',
+  color: '',
+  subcategory: ''
+}
 
 const FilterForm = () => {
   const select = useAppSelector(state => state.product.record)
@@ -11,29 +34,17 @@ const FilterForm = () => {
   const [currentCategory, setCurrentCategory] = useState<string[]>([])
   const navigate = useNavigate()
 
-  const [filters, setFilters] = useState({
-    gender: '',
-    categories: '',
-    maxPrice: '',
-    size: '',
-    brand: '',
-    material: '',
-    color: '',
-    subcategory: ''
-  })
+  const [filters, setFilters] = useState<Filters>(initialFilters)
 
-  const clothingTypes: string[] = [...new Set(select.map(ele => ele.subcategory))]
-  const colors: string[] = [...new Set(select.map(ele => ele.color))]
-  const brands: string[] = [...new Set(select.map(ele => ele.brand))]
-  const materials: string[] = [...new Set(select.map(ele => ele.material))]
+  const clothingTypes = useMemo(() => [...new Set(select.map(ele => ele.subcategory))], [select])
+  const colors = useMemo(() => [...new Set(select.map(ele => ele.color))], [select])
+  const brands = useMemo(() => [...new Set(select.map(ele => ele.brand))], [select])
+  const materials = useMemo(() => [...new Set(select.map(ele => ele.material))], [select])
 
   useEffect(() => {
-    if (filters.gender === 'male') {
-      const forMale = select.filter(ele => ele.cat_prefix !== 'women')
-      setCurrentCategory([...new Set(forMale.map(ele => ele.cat_prefix))])
-    } else if (filters.gender === 'female') {
-      const forFemale = select.filter(ele => ele.cat_prefix !== 'men')
-      setCurrentCategory([...new Set(forFemale.map(ele => ele.cat_prefix))])
+    if (filters.gender) {
+      const filtered = select.filter(ele => ele.gender === filters.gender)
+      setCurrentCategory([...new Set(filtered.map(ele => ele.cat_prefix))])
     } else {
       setCurrentCategory([...new Set(select.map(ele => ele.cat_prefix))])
     }
@@ -60,22 +71,12 @@ const FilterForm = () => {
   }
 
   const resetFilters = () => {
-    const emptyFilters = {
-      gender: '',
-      categories: '',
-      maxPrice: '',
-      size: '',
-      brand: '',
-      material: '',
-      color: '',
-      subcategory: ''
-    }
-    setFilters(emptyFilters)
-    dispatch(setFilteredProducts(select)) // عرض جميع المنتجات
+    setFilters(initialFilters)
+    dispatch(setFilteredProducts(select))
   }
 
   return (
-    <form className='h-[90%] flex flex-col lg:flex-row gap-3 items-center justify-between'>
+     <form className='h-[90%] flex flex-col lg:flex-row gap-3 items-center justify-between'>
       <div id='lines' className='flex flex-col justify-between gap-4 lg:gap-0 w-[90%] md:border-2 p-4 h-full'>
         {/* Line 1 */}
         <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 place-self-center '>
@@ -203,3 +204,4 @@ const FilterForm = () => {
 }
 
 export default FilterForm
+

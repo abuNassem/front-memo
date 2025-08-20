@@ -6,16 +6,15 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import { Tproduct } from "../../store/custom/tproduct";
-import {  useAppSelector } from "../../store/categories/hooks";
+import { useAppSelector } from "../../store/categories/hooks";
 import { api } from "../../template/layout";
 import { Link } from "react-router-dom";
 import { PiSealCheckFill } from "react-icons/pi";
-import {
-  FaStar,
-} from "react-icons/fa6";
+import { FaStar } from "react-icons/fa6";
 import AddButton from "../buttons/addButton";
 import IncDec from "../buttons/Inc&Dec";
 import AddToFavorit from "../buttons/favorit";
+
 export default function Cart({
   isFavorit,
   title,
@@ -31,67 +30,55 @@ export default function Cart({
   color,
   size,
 }: Tproduct) {
-  
-  
   const context = React.useContext(api);
-  
+
   const localhost = "https://back-last.onrender.com/";
+
   // for getting current product
   const getCurrent = () => {
     context?.setCurrent({
-      title: title,
-      img: img,
-      price: price,
-      id: id,
-      discount: discount,
-      about: about,
-      isInCart: isInCart,
-      rating: rating,
+      title,
+      img,
+      price,
+      id,
+      discount,
+      about,
+      isInCart,
+      rating,
       brand,
-      material: material,
-      color: color,
-      size: size,
-      isFavorit:isFavorit
+      material,
+      color,
+      size,
+      isFavorit,
     });
   };
 
-  const [currentChosen,setCurrentChosen]=React.useState<Tproduct|undefined>(undefined)
-const chosen = useAppSelector(state => state.cart.productfullinfo);
-React.useEffect(() => {
-  if (chosen) {
-    const found = chosen.find(ele => ele.id === id);
-    setCurrentChosen(found);
-  }
-}, [chosen, id]);
-// قيمة ابتدائية (false أو حسب الحالة الأولية للكارت)
+  const [currentChosen, setCurrentChosen] = React.useState<Tproduct | undefined>(undefined);
+  const chosen = useAppSelector((state) => state.cart.productfullinfo);
 
-const [isAdded, setIsAdded] = React.useState(() =>
-  chosen?
-  chosen.some(ele => ele.id == id):false
-);
+  React.useEffect(() => {
+    if (chosen) {
+      const found = chosen.find((ele) => ele.id === id);
+      setCurrentChosen(found);
+    }
+  }, [chosen, id]);
 
+  const [isAdded, setIsAdded] = React.useState<boolean>(() =>
+    chosen ? chosen.some((ele) => ele.id === id) : false
+  );
 
-
-React.useEffect(() => {
-  if(chosen){
-  const newVal = chosen.some(ele => ele.id == id);
-    setIsAdded(newVal);
-
-  }else{
-    setIsAdded(false)
-  }
-
-
-}, [chosen, id]);
-
-
-
-
-  
+  React.useEffect(() => {
+    if (chosen) {
+      const newVal = chosen.some((ele) => ele.id === id);
+      setIsAdded(newVal);
+    } else {
+      setIsAdded(false);
+    }
+  }, [chosen, id]);
 
   return (
     <Card
-    id={id.toString()}
+      id={id.toString()}
       sx={{
         maxWidth: 250,
         height: "fit-content",
@@ -100,9 +87,9 @@ React.useEffect(() => {
         position: "relative",
       }}
     >
-      {isAdded ? (
-        <PiSealCheckFill className="w-[30px] h-[30px] absolute z-[19] end-[-2px] top-[-2px]  rounded-full text-green-600 " />
-      ) : null}
+      {isAdded && (
+        <PiSealCheckFill className="w-[30px] h-[30px] absolute z-[19] end-[-2px] top-[-2px] rounded-full text-green-600 " />
+      )}
 
       <Link to={"/aboutitem"}>
         <CardActionArea onClick={getCurrent}>
@@ -151,7 +138,6 @@ React.useEffect(() => {
               noWrap
             >
               <p className="text-gray-700">price:</p>
-
               <p
                 className="text-sm text-red-600"
                 style={{ textDecoration: "line-through" }}
@@ -163,12 +149,11 @@ React.useEffect(() => {
           </CardContent>
         </CardActionArea>
       </Link>
+
       <CardActions sx={{ justifyContent: "space-between", pb: 2 }}>
         <AddToFavorit id={id} />
-  
-
         {isAdded ? (
-          <IncDec id={id} quantity={currentChosen?.quantity?currentChosen?.quantity:0} />
+          <IncDec id={id} quantity={currentChosen?.quantity ?? 0} />
         ) : (
           <AddButton id={id} />
         )}

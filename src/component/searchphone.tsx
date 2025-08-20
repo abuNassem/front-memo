@@ -1,22 +1,18 @@
 import { IconButton } from '@mui/material'
-import React, { useContext } from 'react'
+import  { useContext } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
 import { api } from '../template/layout'
 import { useAppDispatch, useAppSelector } from '../store/categories/hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { FaLariSign } from 'react-icons/fa6'
 import { finding } from '../store/search&filter/search'
-
 const SearchPhone = () => {
     const context=useContext(api)
     const location=useLocation()
-  const [textField, setTextField] = React.useState("");
   const dispatch=useAppDispatch()
   const navigate=useNavigate()
   const record=useAppSelector(state=>state.product.record)
       const searching = (value: string) => {
-        setTextField(value);
         if (record) {
           const input = value.trim().toLowerCase();
 

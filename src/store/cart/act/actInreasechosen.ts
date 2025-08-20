@@ -1,16 +1,36 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-const actIncreaseChosen = createAsyncThunk('cart/actIncreasechosen',
-    async (id: number) => {
-        try {
+import axios, { AxiosError } from "axios";
+import { Tproduct } from "../../custom/tproduct";
 
-           const res= await axios.patch(`https://back-last.onrender.com/chosen/${localStorage.getItem('email')}/${id}`,{mode:'inc'})
-           
-           console.log(res.data.items)
-           return res.data.items
-        } catch(error){
-            console.log('there is error:' +error)
-        }
-    })
+type ChosenResponse = {
+  items: Tproduct[];
+};
 
-    export default actIncreaseChosen
+const actIncreaseChosen = createAsyncThunk<
+  Tproduct[],        // return type لما ينجح
+  number,            // الباراميتر id
+  { rejectValue: string } // نوع الخطأ
+>(
+  "cart/actIncreasechosen",
+  async (id, { rejectWithValue }) => {
+    try {
+      const email = localStorage.getItem("email");
+      if (!email) {
+        return rejectWithValue("Email not found in localStorage");
+      }
+
+      const res = await axios.patch<ChosenResponse>(
+        `https://back-last.onrender.com/chosen/${email}/${id}`,
+        { mode: "inc" }
+      );
+
+      return res.data.items;
+    } catch (err) {
+      const error = err as AxiosError;
+      console.error("Error in actIncreaseChosen:", error.message);
+      return rejectWithValue(error.response?.data as string || error.message);
+    }
+  }
+);
+
+export default actIncreaseChosen;
