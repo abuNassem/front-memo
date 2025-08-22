@@ -78,7 +78,7 @@ const CheckoutPage = () => {
         {cartItems.map(item => (
           <div key={item.id} className="flex justify-between border p-2 rounded">
             <div className="flex items-center gap-4">
-              <img src={localhost + item.img} alt={item.title} className="w-16 h-16 object-cover rounded" />
+              <img src={localhost + item.img} alt={item.title} loading='lazy' className="w-16 h-16 object-cover rounded" />
               <div>
                 <p className="font-semibold">{item.title}</p>
                 <p>Quantity: {item.quantity}</p>

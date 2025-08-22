@@ -60,6 +60,7 @@ const Purchases = () => {
                 <img
                   src={localhost + item.img}
                   alt={item.title}
+                  loading="lazy"
                   className="w-full h-32 object-cover rounded mb-2"
                 />
                 <p className="font-semibold">{item.title}</p>

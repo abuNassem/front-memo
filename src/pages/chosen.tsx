@@ -51,23 +51,27 @@ const Chosen = () => {
               >
                 <img
                   src="/back/public/"
+                  loading='lazy'
                   className="w-[50px] h-[50px] rounded-full"
                 />
                 <img
                   src="../../prod.jpeg"
+                  loading='lazy'
                   className="w-[50px] h-[50px] rounded-full"
                 />
                 <img
                   src="../../prod.jpeg"
+                  loading='lazy'
                   className="w-[50px] h-[50px] rounded-full"
                 />
                 <img
                   src="../../prod.jpeg"
+                  loading='lazy'
                   className="w-[50px] h-[50px] rounded-full"
                 />
               </div>
               <div id="image-product" className="w-[70%]">
-                <img src={localhost + ele.img} className="w-full" />
+                <img src={localhost + ele.img}  loading='lazy' className="w-full" />
               </div>
             </div>
 

@@ -28,7 +28,7 @@ const SignupForm = () => {
       setErorr("enter your email");
     } else {
       axios
-        .post("http://localhost:3000/users", {
+        .post("https://back-last.onrender.com/users", {
           userName,
           email,
           passWord: password,

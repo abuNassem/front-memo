@@ -33,7 +33,7 @@ const LoginForm = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/login', {
+      const res = await axios.post('https://back-last.onrender.com/login', {
         email,
         passWord: password
       })
