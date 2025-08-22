@@ -7,6 +7,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import axios from 'axios';
 import getOrders from '../store/purchases/act/getorders';
 import deleteAll from '../store/cart/act/actDeleteAllChosen';
+import getChoosen from '../store/cart/act/actGetChosen';
 
 const CheckoutPage = () => {
 
@@ -24,19 +25,19 @@ const CheckoutPage = () => {
   };
 
   const handleOrder = () => {
-          axios.post(`http://localhost:3000/orders/${localStorage.getItem('email')}`,form)
-          .then(()=>{
+          axios.post(`https://back-last.onrender.com/orders/${localStorage.getItem('email')}`,form)
+          .then(async()=>{
               context?.setAlert(prev => ({
       ...prev,
       isOpen: true,
       func: 'success',
-      textAlert: 'Your order has been submitted successfully!'
-    }));
-    dispatch(getOrders())
-    dispatch(deleteAll())
-    window.location.href='/'
-    setForm(prev=>({...prev,phone:'',name:'',address:''}))
-          })
+      textAlert: 'Your order has been submitted successfully!'}));
+
+    await dispatch(getOrders())
+    await dispatch(deleteAll())
+    await dispatch(getChoosen(''))
+    navigate('/')
+    setForm(prev=>({...prev,phone:'',name:'',address:''}))  })
           .catch(error=>{
             if(error.response){
               context?.setAlert({
@@ -58,6 +59,7 @@ const CheckoutPage = () => {
 
   };
 
+  context.isSure()
   useEffect(() => {
     const isReady = cartItems && Array.isArray(cartItems);
     if (isReady && cartItems.length < 1 && location.pathname === '/checkout') {

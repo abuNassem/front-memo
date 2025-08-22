@@ -20,7 +20,6 @@ const getChoosen = createAsyncThunk< // Return type
       }
 
       if (id) {
-        // لو في id → جب المنتج وأضفه
         const neededToAdd = await axios.get<Tproduct>(
           `https://back-last.onrender.com/productapi/${id}`
         );
@@ -32,7 +31,6 @@ const getChoosen = createAsyncThunk< // Return type
 
         return res.data.items;
       } else {
-        // لو id === '' → رجّع كل العناصر المختارة
         const res = await axios.get<ChosenResponse>(
           `https://back-last.onrender.com/chosen/${email}`
         );

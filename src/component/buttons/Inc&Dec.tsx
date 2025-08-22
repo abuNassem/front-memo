@@ -31,9 +31,8 @@ const IncDec: React.FC<IncDecProps> = ({ id, quantity }) => {
       func: async () => {
         setLocalLoading(true);
         dispatch({ type: 'cart/deletefromcart', payload: value[index] });
-
         await dispatch(actDeleteFromChosen(id));
-        await dispatch(getChoosen(id)); // ✅ مرر id بدل ''
+        await dispatch(getChoosen('')); // ✅ مرر id بدل ''
         setLocalLoading(false);
       },
     });
