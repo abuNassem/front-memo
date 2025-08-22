@@ -41,5 +41,6 @@ export type Tcontext={
    isPurchases:boolean,
    setIsPurchases:React.Dispatch<React.SetStateAction<boolean>>,
    setOrdersApi:React.Dispatch<React.SetStateAction<[]>>,
-   ordersApi:Order[]
+   ordersApi:Order[],
+   refTop: React.RefObject<HTMLDivElement>;
 }

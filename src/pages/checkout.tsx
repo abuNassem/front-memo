@@ -59,7 +59,6 @@ const CheckoutPage = () => {
 
   };
 
-  context.isSure()
   useEffect(() => {
     const isReady = cartItems && Array.isArray(cartItems);
     if (isReady && cartItems.length < 1 && location.pathname === '/checkout') {
