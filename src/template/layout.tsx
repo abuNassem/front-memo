@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, Suspense, useEffect, useState } from "react";
 import Header from "../component/common/header";
 import Footer from "../component/common/footer";
 import { Outlet, useLocation } from "react-router-dom";
@@ -91,7 +91,8 @@ const Layout = () => {
                 : "none",
           }}
         >
-          <h3 className="text-lg font-[600] ">Order Summary</h3>
+          <div>
+              <h3 className="text-lg font-[600] ">Order Summary</h3>
           <div className="flex flex-col gap-2 mt-4">
             <div className="flex justify-between">
               <p className="font-bold text-sm text-zinc-400">
@@ -112,6 +113,8 @@ const Layout = () => {
               </strong>{" "}
             </div>
           </div>
+          </div>
+        
           <div
             id="chosen-products"
             className="my-4 max-h-[100px] overflow-y-auto p-3 bg-zinc-100 rounded-lg shadow-sm"
@@ -183,7 +186,10 @@ const Layout = () => {
           id="warrper"
           className="min-h-[100vh] h-[auto] container mx-auto mt-4 px-5 py-5"
         >
-          <Outlet />
+          <Suspense fallback={<h1>...loading</h1>}>
+             <Outlet />
+          </Suspense>
+         
         </div>
         <Footer />
       </div>

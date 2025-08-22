@@ -6,14 +6,13 @@ import { Card, CardContent, IconButton } from '@mui/material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Swiper as typeSwiper } from 'swiper/types'
 import actGetPtoducts from '../../store/products/act/actGetproducts'
-import { useAppDispatch, useAppSelector } from '../../store/categories/hooks'
+import { useAppDispatch } from '../../store/categories/hooks'
 
 const MySwiper = () => {
   const dispatch = useAppDispatch()
-  const { loading, record } = useAppSelector(state => state.product)
   const swiperRef = useRef<typeSwiper | null>(null)
 
-  const slides = record.map(item => item.img)
+  const slides = ['/groupClothes.webp','/photo-1589347528565-4ad0dcc12958.avif','/photo-1602810319428-019690571b5b.avif']
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,23 +48,21 @@ const MySwiper = () => {
         modules={[Navigation]}
         onSwiper={swiper => (swiperRef.current = swiper)}
       >
-        {slides.length > 0 ? (
-          slides.map((img, index) => (
+       
+       {   slides.map((img, index) => (
             <SwiperSlide key={index}>
               <Card className="flex justify-center items-center">
                 <CardContent>
                   <img
-                    src={`https://back-last.onrender.com/${img}`}
-                    className="w-[70%] h-[300px] object-contain mx-auto"
+                    src={`${img}`}
+                    className="w-[70%]  object-contain mx-auto"
                     alt={`slide-${index}`}
                   />
                 </CardContent>
               </Card>
             </SwiperSlide>
           ))
-        ) : (
-          <p className="text-center py-10">{loading ? 'Loading...' : 'No products found'}</p>
-        )}
+        }
       </Swiper>
     </div>
   )

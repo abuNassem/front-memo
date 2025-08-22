@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { lazy, useEffect } from 'react'
 import MySwiper from './home/swiper'
 import MyImageList from './home/imglist'
-import Feature from './home/feature'
-import Contact from './home/contact'
+const Feature=lazy(()=>import('./home/feature'))
+const Contact=lazy(()=>import('./home/contact'))
 
 const Home = () => {
 

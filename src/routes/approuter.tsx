@@ -1,18 +1,19 @@
+import { lazy } from "react"
 import { createBrowserRouter,RouterProvider } from "react-router-dom"
-import Aboutus from "../pages/aboutus"
-import Category from "../pages/category"
-import Home from "../pages/home"
-import Product from "../pages/product"
-import Layout from "../template/layout"
-import Login from "../pages/login"
-import Chosen from "../pages/chosen"
-import AboutItem from "../pages/aboutItems"
-import SignIn from "../pages/signup"
-import ResultSearch from "../pages/resultsearch"
-import ResultFiltration from "../pages/resultFiltrationPage"
-import CheckoutPage from "../pages/checkout"
-import Favority from "../pages/favority"
-import Purchases from "../pages/purchases"
+const Aboutus = lazy(() => import("../pages/aboutus"))
+const Category = lazy(() => import("../pages/category"))
+const Home = lazy(() => import("../pages/home"))
+const Product = lazy(() => import("../pages/product"))
+const Layout = lazy(() => import("../template/layout"))
+const Login = lazy(() => import("../pages/login"))
+const Chosen = lazy(() => import("../pages/chosen"))
+const AboutItem = lazy(() => import("../pages/aboutItems"))
+const SignIn = lazy(() => import("../pages/signup"))
+const ResultSearch = lazy(() => import("../pages/resultsearch"))
+const ResultFiltration = lazy(() => import("../pages/resultFiltrationPage"))
+const CheckoutPage = lazy(() => import("../pages/checkout"))
+const Favority = lazy(() => import("../pages/favority"))
+const Purchases = lazy(() => import("../pages/purchases"))
 
 const Approuter = () => {
 const router =createBrowserRouter([{

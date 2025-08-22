@@ -16,8 +16,7 @@ const getChoosen = createAsyncThunk< // Return type
     try {
       const email = localStorage.getItem("email");
       if (!email) {
-        window.location.pathname = "/login";
-        return rejectWithValue("Email not found in localStorage");
+        return rejectWithValue("login first");
       }
 
       if (id) {

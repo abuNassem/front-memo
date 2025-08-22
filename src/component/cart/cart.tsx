@@ -96,6 +96,7 @@ export default function Cart({
           <CardMedia
             component="img"
             image={localhost + img}
+            loading="lazy"
             alt={title}
             sx={{
               height: 150,

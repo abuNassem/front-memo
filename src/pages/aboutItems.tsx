@@ -45,6 +45,8 @@ const AboutItem = () => {
             <img
               key={i}
               src="../../prod.jpeg"
+                          loading="lazy"
+
               className="w-[50px] h-[50px] rounded-full"
               alt={`preview-${i}`}
             />
@@ -54,6 +56,7 @@ const AboutItem = () => {
           <img
             src={`https://back-last.onrender.com/${context.current.img}`}
             className="w-full"
+            loading="lazy"
             alt={context.current.title}
           />
         </div>

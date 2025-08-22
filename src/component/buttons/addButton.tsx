@@ -3,8 +3,8 @@ import { useAppDispatch } from "../../store/categories/hooks";
 import { Button } from "@mui/material";
 import getChoosen from "../../store/cart/act/actGetChosen";
 import { api } from "../../template/layout";
-import { useNavigate } from "react-router-dom";
 import Loader from "../feedback/loading";
+import { useNavigate } from "react-router-dom";
 
 // ✅ الأفضل تبدأ أسماء الـ types بحرف كبير
 type AddButtonProps = {
@@ -15,19 +15,22 @@ const AddButton: React.FC<AddButtonProps> = ({ id }) => {
   const context = useContext(api);
   const dispatch = useAppDispatch();
   const [localLoading, setLocalLoading] = useState<boolean>(false);
-
+  const navigate=useNavigate()
   // ✅ دالة إضافة للعربة
   const addToCart = async () => {
+    if(localStorage.getItem('email')){
       setLocalLoading(true);
-
       // dispatch للـ reducer
       dispatch({ type: "cart/addtocart", payload: context?.current });
-
       // استدعاء async action
       await dispatch(getChoosen(id));
 
       setLocalLoading(false);
    
+    }else{
+      navigate('/login')
+    }
+      
   };
 
   return (

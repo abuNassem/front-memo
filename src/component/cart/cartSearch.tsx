@@ -24,6 +24,7 @@ const CartSearch = ({
         <div id="image-product" className="w-[70%]">
           <img
             src={`https://back-last.onrender.com/${img}`}
+            loading="lazy"
             className="w-full"
             alt={title}
           />
