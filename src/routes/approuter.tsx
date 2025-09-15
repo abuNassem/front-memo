@@ -1,5 +1,6 @@
 import { lazy } from "react"
 import { createBrowserRouter,RouterProvider } from "react-router-dom"
+import Auth from "../pages/auth"
 const Aboutus = lazy(() => import("../pages/aboutus"))
 const Category = lazy(() => import("../pages/category"))
 const Home = lazy(() => import("../pages/home"))
@@ -8,7 +9,7 @@ const Layout = lazy(() => import("../template/layout"))
 const Login = lazy(() => import("../pages/login"))
 const Chosen = lazy(() => import("../pages/chosen"))
 const AboutItem = lazy(() => import("../pages/aboutItems"))
-const SignIn = lazy(() => import("../pages/signup"))
+const SignUp = lazy(() => import("../pages/signup"))
 const ResultSearch = lazy(() => import("../pages/resultsearch"))
 const ResultFiltration = lazy(() => import("../pages/resultFiltrationPage"))
 const CheckoutPage = lazy(() => import("../pages/checkout"))
@@ -44,8 +45,8 @@ const router =createBrowserRouter([{
     element:<Login/>
   },
    {
-    path:'signin',
-    element:<SignIn/>
+    path:'signup',
+    element:<SignUp/>
   },
   {
     path:'chosen',
@@ -74,6 +75,10 @@ const router =createBrowserRouter([{
    {
     path:'purchases',
     element:<Purchases/>
+  },
+  {
+    path:'auth',
+    element:<Auth/>
   }
 ]
 }])

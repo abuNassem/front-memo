@@ -1,9 +1,10 @@
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useContext } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/categories/hooks'
 import { Tproduct } from '../../store/custom/tproduct'
 import { setFilteredProducts } from '../../store/search&filter/filter'
 import { useNavigate } from 'react-router-dom'
+import { api } from '../../template/layout'
 
 type Filters = {
   gender: string
@@ -63,10 +64,11 @@ const FilterForm = () => {
     )
     setResultFilter(result)
   }, [filters, select])
-
+const context=useContext(api)
   const apply = async (e: React.FormEvent) => {
     e.preventDefault()
     await dispatch(setFilteredProducts(resultFilter))
+    context?.setFilterMode(false)
     navigate('/filtration')
   }
 

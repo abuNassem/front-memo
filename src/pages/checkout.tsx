@@ -10,14 +10,13 @@ import deleteAll from '../store/cart/act/actDeleteAllChosen';
 import getChoosen from '../store/cart/act/actGetChosen';
 
 const CheckoutPage = () => {
-
   const context = useContext(api);
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(state => state.cart.productfullinfo);
   const totalPrice = useAppSelector(state => state.getPrice.record.listPrice);
   const location = useLocation();
   const navigate = useNavigate();
-  const localhost = 'https://back-last.onrender.com/';
+  const localhost = '/api';
   const [form, setForm] = useState({ name: '', phone: '', address: '',items:[...cartItems]});
 
   const handleInput = (e) => {
@@ -25,7 +24,7 @@ const CheckoutPage = () => {
   };
 
   const handleOrder = () => {
-          axios.post(`https://back-last.onrender.com/orders/${localStorage.getItem('email')}`,form)
+          axios.post(`/api/orders`,form,{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
           .then(async()=>{
               context?.setAlert(prev => ({
       ...prev,
@@ -39,12 +38,8 @@ const CheckoutPage = () => {
     navigate('/')
     setForm(prev=>({...prev,phone:'',name:'',address:''}))  })
           .catch(error=>{
-            if(error.response){
-              context?.setAlert({
-                isOpen:true,
-                func:'warning',
-                textAlert:error.response.data.message
-              })
+            if(error.response && error.response.status===401){
+             window.location.href='/login'
             }else{
                 context?.setAlert({
                 isOpen:true,
@@ -73,7 +68,6 @@ const CheckoutPage = () => {
       </IconButton>
 
       <h2 className="text-2xl font-bold mb-4">Checkout Page</h2>
-
       {/* 🛒 Products */}
       <div className="space-y-4 mb-6">
         {cartItems.map(item => (

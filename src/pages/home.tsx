@@ -9,7 +9,6 @@ const Home = () => {
    
  useEffect(()=>{
      const hash=window.location.hash.substring(1)
-     console.log(hash)
      const ele=document.getElementById(hash)
      if(ele){
       ele.scrollIntoView({behavior:'smooth'})

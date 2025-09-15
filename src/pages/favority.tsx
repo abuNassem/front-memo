@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import { useAppDispatch, useAppSelector } from '../store/categories/hooks';
 import { FaHeart } from 'react-icons/fa6';
 import actDeleteFavority from '../store/favority/act/actdeletefavority';
-import actGetPtoducts from '../store/products/act/actGetproducts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import getAllFavo from '../store/favority/act/actgetallfavo';
 
 const Favority = () => {
     const favority=useAppSelector(state=>state.favority.favorities)
@@ -27,14 +27,15 @@ const Favority = () => {
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div">Favorities</ListSubheader>
       </ImageListItem>
-      {favority.map((item) => (
+      <div className='h-[80vh]'>
+{favority.map((item) => (
         <ImageListItem key={item.img}>
-          <Link to={`/product#${item.id}`}>
+          <Link to={`/product#${item._id}`}>
           
           
           <img
-            srcSet={`https://back-last.onrender.com/${item.img}`}
-            src={`https://back-last.onrender.com/${item.img}`}
+            srcSet={`/api/${item.img}`}
+            src={`/api/${item.img}`}
             alt={item.title}
             loading="lazy"
           />
@@ -52,8 +53,8 @@ const Favority = () => {
                             className="text-red-500 cursor-pointer"
                             onClick={async () => {
                               
-                              await dispatch(actDeleteFavority(item.id));
-                              await dispatch(actGetPtoducts(""));
+                              await dispatch(actDeleteFavority(item.owner));
+                              await dispatch(getAllFavo());
                               
                             }}
                           />
@@ -65,6 +66,8 @@ const Favority = () => {
           />
         </ImageListItem>
       ))}
+      </div>
+      
     </ImageList>
     </div>
   )

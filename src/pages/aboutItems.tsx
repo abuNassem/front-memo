@@ -19,7 +19,7 @@ const AboutItem = () => {
   // ✅ تحديث حالة isAdded عند تغير chosen أو current
   useEffect(() => {
     if (chosen && context?.current) {
-      const newVal = chosen.some((ele) => ele.id === context.current?.id);
+      const newVal = chosen.some((ele) => ele.owner === context.current?._id);
       setIsAdded(newVal);
     }
   }, [chosen, context?.current]);
@@ -54,7 +54,7 @@ const AboutItem = () => {
         </div>
         <div id="image-product" className="w-[70%]">
           <img
-            src={`https://back-last.onrender.com/${context.current.img}`}
+            src={`/api/${context.current.img}`}
             className="w-full"
             loading="lazy"
             alt={context.current.title}
@@ -68,7 +68,7 @@ const AboutItem = () => {
           <h1 className="text-1xl sm:text-2xl text-sky-700 relative">
             {context.current.title}
             <div className="absolute top-[-20%] start-[-10%] text-[22px]">
-              <AddToFavorit id={context.current.id} />
+              <AddToFavorit _id={context.current._id } title={context.current.title} img={context.current.img} />
             </div>
           </h1>
           <p className="flex gap-2 text-lg">
@@ -148,7 +148,7 @@ const AboutItem = () => {
                 Already Added
               </div>
             ) : (
-              <AddButton id={context.current.id} />
+              <AddButton _id={context.current._id} />
             )}
           </div>
         </div>

@@ -14,6 +14,7 @@ import { FaStar } from "react-icons/fa6";
 import AddButton from "../buttons/addButton";
 import IncDec from "../buttons/Inc&Dec";
 import AddToFavorit from "../buttons/favorit";
+import Loader from "../feedback/loading";
 
 export default function Cart({
   isFavorit,
@@ -29,10 +30,11 @@ export default function Cart({
   material,
   color,
   size,
+  _id
 }: Tproduct) {
   const context = React.useContext(api);
 
-  const localhost = "https://back-last.onrender.com/";
+  const localhost = "/api/";
 
   // for getting current product
   const getCurrent = () => {
@@ -40,7 +42,7 @@ export default function Cart({
       title,
       img,
       price,
-      id,
+      _id,
       discount,
       about,
       isInCart,
@@ -50,6 +52,7 @@ export default function Cart({
       color,
       size,
       isFavorit,
+      
     });
   };
 
@@ -58,27 +61,37 @@ export default function Cart({
 
   React.useEffect(() => {
     if (chosen) {
-      const found = chosen.find((ele) => ele.id === id);
+      const found = chosen.find((ele) => ele._id=== _id);
       setCurrentChosen(found);
     }
-  }, [chosen, id]);
+  }, [chosen, _id]);
 
   const [isAdded, setIsAdded] = React.useState<boolean>(() =>
-    chosen ? chosen.some((ele) => ele.id === id) : false
+    chosen ? chosen.some((ele) => ele._id=== _id) : false
   );
 
   React.useEffect(() => {
     if (chosen) {
-      const newVal = chosen.some((ele) => ele.id === id);
+      const newVal = chosen.some((ele) => ele._id ===_id);
       setIsAdded(newVal);
     } else {
       setIsAdded(false);
     }
   }, [chosen, id]);
 
+
+React.useEffect(() => {
+  const hash = window.location.hash.substring(1);
+  if (!hash) return;
+  const element = document.getElementById(hash);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}, [])
   return (
-    <Card
-      id={id.toString()}
+    <div id={_id}>
+<Card
+      
       sx={{
         maxWidth: 250,
         height: "fit-content",
@@ -93,7 +106,8 @@ export default function Cart({
 
       <Link to={"/aboutitem"}>
         <CardActionArea onClick={getCurrent}>
-          <CardMedia
+        {
+          img?<CardMedia
             component="img"
             image={localhost + img}
             loading="lazy"
@@ -105,7 +119,9 @@ export default function Cart({
               borderTopLeftRadius: "12px",
               borderTopRightRadius: "12px",
             }}
-          />
+          />:<Loader/>
+        }
+          
           <CardContent>
             <Typography
               gutterBottom
@@ -133,32 +149,38 @@ export default function Cart({
               {about}
             </Typography>
             <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ display: "flex", gap: 1, padding: "5px 0" }}
-              noWrap
-            >
-              <p className="text-gray-700">price:</p>
-              <p
-                className="text-sm text-red-600"
-                style={{ textDecoration: "line-through" }}
-              >
-                {discount}$
-              </p>
-              <p className="text-sky-700">{price}$</p>
-            </Typography>
+  component="div" // مهم عشان ما يطلع <p>
+  variant="body1"
+  color="text.secondary"
+  sx={{ display: "flex", gap: 1, padding: "5px 0" }}
+  noWrap
+>
+  <span className="text-gray-700 font-bold">price:</span>
+  {discount && (
+    <span
+      className="text-sm text-red-600"
+      style={{ textDecoration: "line-through" }}
+    >
+      {discount}$
+    </span>
+  )}
+  <span className="text-sky-700">{price}$</span>
+</Typography>
+
           </CardContent>
         </CardActionArea>
       </Link>
 
       <CardActions sx={{ justifyContent: "space-between", pb: 2 }}>
-        <AddToFavorit id={id} />
+        <AddToFavorit _id={_id} title={title} img={img} />
         {isAdded ? (
-          <IncDec id={id} quantity={currentChosen?.quantity ?? 0} />
+          <IncDec _id={_id} quantity={currentChosen?.quantity ?? 0} />
         ) : (
-          <AddButton id={id} />
+          <AddButton  _id={_id} />
         )}
       </CardActions>
     </Card>
+    </div>
+    
   );
 }

@@ -1,20 +1,14 @@
 import { IconButton } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
-import { api } from "../../template/layout";
 
 const ToTop = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const context = useContext(api);
-  const refTop = context.refTop;
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
-      setScrollY(currentY);
       setShowScrollTop(currentY > 150);
-      console.log(currentY);
     };
 
     window.addEventListener("scroll", handleScroll);

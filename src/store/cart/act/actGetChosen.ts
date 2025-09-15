@@ -2,44 +2,38 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { Tproduct } from "../../custom/tproduct";
 
-type ChosenResponse = {
-  items: Tproduct[];
-};
 
-const getChoosen = createAsyncThunk< // Return type
-  Tproduct[],                         // عند النجاح يرجّع array من المنتجات
-  number | "",                        // الباراميتر اللي بياخده
-  { rejectValue: string }             // نوع الخطأ
->(
+
+const getChoosen = createAsyncThunk(
   "cart/actGetChosen",
-  async (id, { rejectWithValue }) => {
+  async (id:string |'',thunkAPI) => {
+    const {rejectWithValue}=thunkAPI
     try {
-      const email = localStorage.getItem("email");
-      if (!email) {
-        return rejectWithValue("login first");
-      }
 
       if (id) {
         const neededToAdd = await axios.get<Tproduct>(
-          `https://back-last.onrender.com/productapi/${id}`
+          `/api/productapi/${id}`
         );
 
-        const res = await axios.post<ChosenResponse>(
-          `https://back-last.onrender.com/chosen/${email}`,
-          neededToAdd.data
+        const res = await axios.post<Tproduct[]>(
+          `/api/chosen/${id}`,
+          neededToAdd.data,
+          {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
         );
 
-        return res.data.items;
+        return res.data;
       } else {
-        const res = await axios.get<ChosenResponse>(
-          `https://back-last.onrender.com/chosen/${email}`
+        const res = await axios.get<Tproduct[]>(
+          `/api/chosen`,
+          {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
         );
 
-        return res.data.items;
+        return res.data
       }
     } catch (err) {
+      
       const error = err as AxiosError;
-      console.error("Error in getChoosen:", error.message);
+     
       return rejectWithValue(error.response?.data as string || error.message);
     }
   }

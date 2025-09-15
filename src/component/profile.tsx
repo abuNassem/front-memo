@@ -14,6 +14,7 @@ import {  useAppSelector } from "../store/categories/hooks";
 import { api } from "../template/layout";
 
 import { Typography } from "@mui/material";
+import axios from "axios";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -35,13 +36,17 @@ export default function Profile() {
   };
   const logout = async() => {
     handleClose();
-    context?.setAlert((prev) => ({
+    await axios.get('/api/logout',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
+            localStorage.clear();
+  context?.setAlert((prev) => ({
       ...prev,
       isOpen: true,
       func: "info",
       textAlert: "you have loged out ",
     }));
-    localStorage.clear();
+            
+              window.location.href='/login'
+  
 
   };
   return (
@@ -111,7 +116,7 @@ export default function Profile() {
         </MenuItem>
 
         <Divider />
-        {itemData? (
+        {itemData.length? (
           <MenuItem onClick={handleClose} component={Link} to="/favority">
             <ListItemIcon>
               <FaHeart className="text-red-500" />
@@ -155,14 +160,12 @@ export default function Profile() {
           <Typography sx={{ fontSize: "15px" }}> Your Purchases</Typography>
         </MenuItem>}
        
-        <Link to="/signin">
           <MenuItem onClick={logout}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
             <Typography sx={{ fontSize: "15px" }}> Logout</Typography>
           </MenuItem>
-        </Link>
       </Menu>
     </div>
   );

@@ -10,6 +10,7 @@ const MyAlert = () => {
 
   return (
     <div className="fixed z-[100] top-0 w-full flex justify-center p-3">
+      
       <Alert
         severity={context.alert.func as "error" | "info" | "success" | "warning"}
         sx={{ fontWeight: "bold", fontSize: "18px", width: "100%" }}

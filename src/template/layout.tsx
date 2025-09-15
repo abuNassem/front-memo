@@ -1,7 +1,7 @@
 import React, { createContext, Suspense, useEffect, useRef, useState } from "react";
 import Header from "../component/common/header";
 import Footer from "../component/common/footer";
-import { Outlet} from "react-router-dom";
+import { Outlet, useLocation} from "react-router-dom";
 import { Tcontext, TlightProduct, Ttarget } from "../store/custom/context";
 import { useAppDispatch} from "../store/categories/hooks";
 import getChoosen from "../store/cart/act/actGetChosen";
@@ -11,14 +11,14 @@ import Sure from "../component/feedback/isSure";
 import { motion } from "framer-motion";
 import FilterComponenet from "../component/filterComponent";
 import MyAlert from "../component/feedback/alert";
-import getAllFavo from "../store/favority/act/getallfavo";
+import getAllFavo from "../store/favority/act/actgetallfavo";
 import getOrders from "../store/purchases/act/getorders";
 import CartComponent from "../component/cartComponent";
 import ToTop from "../component/buttons/toTop";
 export const api = createContext<Tcontext | null>(null);
 const Layout = () => {
   const dispatch = useAppDispatch();
-  
+  const location=useLocation()
   const [openMenue, setOpenMenue] = useState(false);
   const [isSure, setIsSure] = useState(false);
   const [target, setTarget] = useState<Ttarget | null>(null);
@@ -36,10 +36,15 @@ const Layout = () => {
 
   useEffect(() => {
     dispatch(actGetPtoducts(""));
-    dispatch(getChoosen(""));
-    dispatch(getAllFavo(null));
-    dispatch(getOrders())
+    if(localStorage.getItem('token')){
+       dispatch(getChoosen(""));
+         dispatch(getOrders())
+    dispatch(getAllFavo());
+    }else{
+      localStorage.clear()
+    }
   }, []);
+  
 
   const MyValue = {
     openMenue,
@@ -76,9 +81,16 @@ const Layout = () => {
             <FilterComponenet />
           </motion.div>
         </div>
-        <Header />
+        
+        {location.pathname==='/login' || location.pathname==='/signup'|| location.pathname==='/auth'?null:
+        <>
+         <Header />
         <CartComponent/>
                           <ToTop/>
+        </>
+       
+        }
+        
 
               <div
           id="warrper"

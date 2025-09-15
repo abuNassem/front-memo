@@ -5,19 +5,17 @@ const deleteAll = createAsyncThunk(
   "cart/actDeleteAllChosen",
   async (_, { rejectWithValue }) => {
     try {
-      const email = localStorage.getItem("email");
-      if (!email) {
-        return rejectWithValue("Email not found in localStorage");
-      }
-
       const res = await axios.delete(
-        `https://back-last.onrender.com/chosen/${email}`
+        `/api/chosen/`,
+        {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
       );
 
       return res.data.items;
     } catch (err) {
+       if(err.response.status==401){
+        window.location.href='/login'
+      }
       const error = err as AxiosError;
-      console.error("There is error:", error.message);
       return rejectWithValue(error.response?.data || error.message);
     }
   }

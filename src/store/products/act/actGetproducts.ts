@@ -16,11 +16,12 @@ const actGetPtoducts = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       if(prefix===''){
-        const response= await axios.get<Tproduct[]>(`https://back-last.onrender.com/productapi`)
+        const response= await axios.get<Tproduct[]>(`/api/productapi`)
+        
               return response.data;
 
       }else{
-             const response = await axios.get<Tproduct[]>(`https://back-last.onrender.com/productapi?cat_prefix=${prefix}`);
+             const response = await axios.get<Tproduct[]>(`/api/productapi?cat_prefix=${prefix}`);
 
       return response.data;
 

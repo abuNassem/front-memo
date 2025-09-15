@@ -11,43 +11,43 @@ import Loader from '../feedback/loading';
 import { Tproduct } from '../../store/custom/tproduct';
 
 type IncDecProps = {
-  id: number;
+  _id:string;
   quantity: number;
 };
 
 // 👇 عرف نوع المنتج
 
 
-const IncDec: React.FC<IncDecProps> = ({ id, quantity }) => {
+const IncDec: React.FC<IncDecProps> = ({ _id, quantity }) => {
   const value = useAppSelector((state) => state.product.record as Tproduct[]); // ✅ تأكيد النوع
   const dispatch = useAppDispatch();
   const context = useContext(api);
   const [localLoading, setLocalLoading] = useState(false);
 
   // confirmation delete items if quantity = 1
-  const lastOne = (id: number, index: number) => {
+  const lastOne = (id:string, index: number) => {
     context?.setTarget({
       name: 'If you continue you will delete the item from your chosen?',
       func: async () => {
         setLocalLoading(true);
         dispatch({ type: 'cart/deletefromcart', payload: value[index] });
-        await dispatch(actDeleteFromChosen(id));
-        await dispatch(getChoosen('')); // ✅ مرر id بدل ''
+        await dispatch(actDeleteFromChosen(_id));
+        await dispatch(getChoosen(''));
         setLocalLoading(false);
       },
     });
     context?.setIsSure(true);
   };
 
-  const index = value.findIndex((ele) => ele.id === id);
+  const index = value.findIndex((ele) => ele._id === _id);
 
   return (
     <div className="flex items-center gap-2">
       <IconButton
         onClick={async () => {
           setLocalLoading(true);
-          await dispatch(actIncreaseChosen(id));
-          await dispatch(getChoosen(id)); // ✅ مرر id بدل ''
+          await dispatch(actIncreaseChosen(_id));
+          await dispatch(getChoosen('')); 
           setLocalLoading(false);
         }}
       >
@@ -76,11 +76,11 @@ const IncDec: React.FC<IncDecProps> = ({ id, quantity }) => {
       <IconButton
         onClick={async () => {
           if (quantity < 2) {
-            lastOne(id, index);
+            lastOne(_id, index);
           } else {
             setLocalLoading(true);
-            await dispatch(actDecreaseChosen(id));
-            await dispatch(getChoosen(id)); // ✅ مرر id بدل ''
+            await dispatch(actDecreaseChosen(_id));
+            await dispatch(getChoosen('')); 
             setLocalLoading(false);
           }
         }}

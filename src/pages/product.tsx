@@ -23,34 +23,16 @@ const Product = () => {
 }, [params.prefix]);
 
 useEffect(() => {
-    console.log('useeffact work')
-  const scrollToHash = () => {
-    console.log('scrollToHash')
-    const hash = window.location.hash.substring(1)
-
-    if (hash) {
-      const element = document.getElementById(hash)
-      console.log(element)
-      if (element) {
-        
-        element.scrollIntoView({ behavior: 'smooth' });
-      } 
-    }else{
-      console.log('hash not found')
-    }
-  };
-
-  scrollToHash();
-
-  window.addEventListener('hashchange', scrollToHash);
-
-  return () => {
-    window.removeEventListener('hashchange', scrollToHash);
-  };
-}, []);
+  const hash = window.location.hash.substring(1);
+  if (!hash) return;
+  const element = document.getElementById(hash);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}, [])
 
   return (
-    <div className='mt-5 px-[30px] sm:px-[70px] grid grid-cols-1 place-items-center sm:grid-cols-2 lg:grid-cols-3  gap-[30px] md:gap-[50px]'>
+    <div id='product' className='mt-5 px-[30px] sm:px-[70px] grid grid-cols-1 place-items-center sm:grid-cols-2 lg:grid-cols-3  gap-[30px] md:gap-[50px]'>
            
             {
             record.map((item,index)=>(

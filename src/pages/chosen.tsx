@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/categories/hooks";
 import {  Divider, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -80,7 +80,7 @@ const Chosen = () => {
                 <h1 className="text-1xl sm:text-2xl text-sky-700 ">
                   {ele.title}
                   <div className="absolute top-[-25%] start-[-10%] text-[22px]">
-                  <AddToFavorit id={ele.id} />
+                  <AddToFavorit _id={ele._id} title={ele.title} img={ele.img} />
                                            </div>
                 </h1>
                 <p className="flex gap-2 text-lg">
@@ -151,7 +151,7 @@ const Chosen = () => {
                           type: "cart/deletefromcart",
                           payload: value[index],
                         });
-                        await dispatch(actDeleteFromChosen(ele.id));
+                        await dispatch(actDeleteFromChosen(ele._id));
                         await dispatch(getChoosen(""));
                       }}
                     >
@@ -162,7 +162,7 @@ const Chosen = () => {
                     </IconButton>
                   </div>
                   <div className="flex items-center gap-2">
-                    <IncDec id={ele.id} quantity={ele.quantity} />
+                    <IncDec _id={ele._id} quantity={ele.quantity} />
                   </div>
                 </div>
               </div>
@@ -219,6 +219,10 @@ const Chosen = () => {
             </ul>
           </div>
           <Divider sx={{ my: 2 }} />
+
+
+
+          {/* menue */}
           <div className="flex flex-col gap-3 my-3">
             <button
               onClick={() => {

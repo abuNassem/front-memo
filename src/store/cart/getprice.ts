@@ -8,7 +8,8 @@ import deleteAll from "./act/actDeleteAllChosen";
 
 // تعريف نوع المنتج المستعمل هنا
 export type TProductCart = {
-  id: number;
+  _id: string;
+  owner:string;
   quantity: number;
   title: string;
   price: string;
@@ -27,7 +28,7 @@ const getPriceSlice = createSlice({
   extraReducers: (builder) => {
     const calculate = (data: TProductCart[]) => {
       return data.map(ele => ({
-        id: ele.id,
+        _id: ele._id,
         quantity: ele.quantity,
         title: ele.title,
         price: ele.price,

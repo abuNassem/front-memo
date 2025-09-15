@@ -3,8 +3,8 @@ import { FaLock, FaRegEye, FaUser } from "react-icons/fa6";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { GoEyeClosed } from "react-icons/go";
 import { api } from "../../template/layout";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "../feedback/loading";
 const SignupForm = () => {
   const [isboldEmail, setIsBoldEmail] = useState(false);
   const [isboldPassword, setIsBoldPassword] = useState(false);
@@ -15,45 +15,47 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
   const context = useContext(api);
-  const navigate = useNavigate();
 
-  const sendForm = (e) => {
-    e.preventDefault();
-    if (!userName.length) {
-      setErorr("enter your name");
-    } else if (!password.length) {
-      setErorr("enter your password");
-    } else if (!email.length) {
-      setErorr("enter your email");
-    } else {
-      axios
-        .post("https://back-last.onrender.com/users", {
-          userName,
-          email,
-          passWord: password,
-        })
-        .then((res) => {
-          if (!res.data) {
-            console.log("there no data ");
-          }
-          localStorage.setItem("userName", res.data.user.userName);
-          localStorage.setItem("email", res.data.user.email);
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
-          context?.setAlert((prev) => ({
-            ...prev,
-            isOpen: true,
-            func: "success",
-            textAlert: "success sign up",
-          }));
-        })
-        .catch((error) => {
-          setErorr(error.response.data.error);
-        });
+  const sendForm = async (e) => {
+  e.preventDefault();
+
+  if (!userName.length) {
+    setErorr("enter your name");
+  } else if (!password.length) {
+    setErorr("enter your password");
+  } else if (!email.length) {
+    setErorr("enter your email");
+  } else {
+    try {
+      setIsLoading(true);
+
+      const res = await axios.post("/api/users", {
+        userName,
+        email,
+        passWord: password
+      });
+
+      localStorage.setItem("userName", res.data.user.userName);
+      localStorage.setItem("email", res.data.user.email);
+      localStorage.setItem('token',res.data.token)
+      window.location.href='/'
+
+      context?.setAlert((prev) => ({
+        ...prev,
+        isOpen: true,
+        func: "success",
+        textAlert: "success sign up",
+      }));
+    } catch (error) {
+      setErorr(error.response?.data?.error || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }
+};
+
 
   return (
     <form
@@ -157,12 +159,20 @@ const SignupForm = () => {
         </div>
       ) : null}
 
-      <button
+
+ {isLoading ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <Loader/>
+        </div>
+      ) : (
+<button
         type="submit"
         className="w-[60%] h-[45px] border-2 border-zinc-100/50 hover:border-zinc-100 duration-[0.5s] font-bold text-zinc-100/50 hover:text-zinc-100  hover:rounded-[30px]"
       >
         SignIn
       </button>
+      )}
+      
     </form>
   );
 };

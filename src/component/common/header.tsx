@@ -8,11 +8,11 @@ import { Container, IconButton } from "@mui/material";
 import CartIcon from "../buttons/cartIcon";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import Side from "./side";
-import Profile from "../../util/proflio";
 import { api } from "../../template/layout";
 import { useAppDispatch, useAppSelector } from "../../store/categories/hooks";
 import { finding } from "../../store/search&filter/search";
 import SearchPhone from "../searchphone";
+import Profile from "../profile";
 
 // ✅ تعريف type خاص بالـ NavLink
 type NavState = {
@@ -126,7 +126,7 @@ const Header: React.FC = () => {
 
               {/* Login / Profile */}
               {localStorage.getItem("userName") ? (
-                <Profile />
+                <Profile/>
               ) : (
                 <div id="login" className="flex gap-5 mx-3">
                   <Link to="/login">Login</Link>

@@ -19,7 +19,7 @@ type Order = {
 };
 
 const Purchases = () => {
-  const localhost = "https://back-last.onrender.com/";
+  const localhost = "/api/";
 
   // تحديد النوع هنا يحل مشكلة never[]
   const orders = useAppSelector((state: { orders: { orders: Order[] } }) => state.orders.orders);

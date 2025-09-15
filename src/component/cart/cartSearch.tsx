@@ -14,9 +14,9 @@ const CartSearch = ({
   size,
   brand,
   material,
-  id,
   color,
   rating,
+  _id
 }: Tproduct) => {
   return (
     <div className="flex flex-col lg:flex-row gap-3 items-center relative w-[90%]">
@@ -36,7 +36,7 @@ const CartSearch = ({
           <h1 className="text-1xl sm:text-2xl text-sky-700 relative">
             {title}
             <div className="absolute top-[-25%] start-[-10%] text-[22px]">
-              <AddToFavorit id={id} />
+              <AddToFavorit _id={_id} img={img} title={title} />
             </div>
           </h1>
           <p className="flex gap-2 text-lg">
@@ -98,7 +98,7 @@ const CartSearch = ({
           </ul>
 
           <div className="flex items-end">
-            <AddButton id={id} />
+            <AddButton _id={_id} />
           </div>
         </div>
       </div>

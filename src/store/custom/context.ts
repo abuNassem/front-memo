@@ -3,7 +3,7 @@ export type    Ttarget={
    func:()=>void
 }
 export type TlightProduct = {
-  id: number;
+  _id:string;
   title: string;
   img: string;
   price: string;

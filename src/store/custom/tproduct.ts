@@ -1,5 +1,6 @@
 export type Tproduct = {
     id: number,
+    _id:string
     title: string,
     cat_prefix: string,
     img: string,
@@ -17,5 +18,6 @@ export type Tproduct = {
     subcategory: string;
     rating: number;
     addedDate: string;
+    owner:string
 }
 

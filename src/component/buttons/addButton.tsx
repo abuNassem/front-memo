@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 
 // ✅ الأفضل تبدأ أسماء الـ types بحرف كبير
 type AddButtonProps = {
-  id: number;
+  _id:string
 };
 
-const AddButton: React.FC<AddButtonProps> = ({ id }) => {
+const AddButton: React.FC<AddButtonProps> = ({_id }) => {
   const context = useContext(api);
   const dispatch = useAppDispatch();
   const [localLoading, setLocalLoading] = useState<boolean>(false);
@@ -23,7 +23,7 @@ const AddButton: React.FC<AddButtonProps> = ({ id }) => {
       // dispatch للـ reducer
       dispatch({ type: "cart/addtocart", payload: context?.current });
       // استدعاء async action
-      await dispatch(getChoosen(id));
+      await dispatch(getChoosen(_id));
 
       setLocalLoading(false);
    

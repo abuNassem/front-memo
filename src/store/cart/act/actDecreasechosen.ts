@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const actDecreaseChosen = createAsyncThunk(
   "cart/actDecreasechosen",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const email = localStorage.getItem("email");
       if (!email) {
@@ -11,15 +11,18 @@ const actDecreaseChosen = createAsyncThunk(
       }
 
       const res = await axios.patch(
-        `https://back-last.onrender.com/chosen/${email}/${id}`,
-        { mode: "dec" }
+        `/api/chosen/${id}`,
+        { mode: "dec" },
+                {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+
       );
 
-      console.log(res.data.items);
       return res.data.items;
     } catch (err) {
+       if(err.response.status==401){
+        window.location.href='/login'
+      }
       const error = err as AxiosError;
-      console.error("There is error:", error.message);
       return rejectWithValue(error.response?.data || error.message);
     }
   }

@@ -3,7 +3,7 @@
 import { Link } from 'react-router-dom';
 import SignupForm from '../component/forms/signupForm';
 import { FaHome } from 'react-icons/fa';
-const SignIn = () => {
+const SignUp = () => {
  
 return (
   <div>
@@ -24,4 +24,4 @@ return (
 )
 }
 
-export default SignIn
+export default SignUp

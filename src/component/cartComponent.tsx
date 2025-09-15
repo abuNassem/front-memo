@@ -1,6 +1,6 @@
 import { Close } from '@mui/icons-material';
 import { Divider, IconButton } from '@mui/material';
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import actDeleteFromChosen from '../store/cart/act/actDeletefromchosen';
 import { useAppDispatch, useAppSelector } from '../store/categories/hooks';
@@ -17,10 +17,10 @@ const CartComponent = () => {
       const dispatch=useAppDispatch()
   return (
      <div
-          className=" absolute end-2 top-[100px] z-[20] bg-white w-full sm:w-[50%] lg:w-[30%] h-auto border-2 p-3"
+          className=" absolute end-2 top-[100px] z-[100] bg-white w-full sm:w-[50%] lg:w-[30%] h-auto border-2 p-3"
           style={{
             display:
-              context.openMenue && location.pathname != "/chosen" && products.length > 0
+              context?.openMenue && location.pathname != "/chosen" && products.length > 0
                 ? "block"
                 : "none",
           }}
@@ -68,11 +68,13 @@ const CartComponent = () => {
                   </p>
                   <IconButton
                     onClick={async () => {
-                      await dispatch({
+                     dispatch({
                         type: "cart/deletefromcart",
                         payload: context.current,
                       });
-                      await dispatch(actDeleteFromChosen(ele.id));
+                      console.log(ele._id)
+                      await dispatch(actDeleteFromChosen(ele._id));
+
                       await dispatch(getChoosen(""));
                     }}
                   >
@@ -98,7 +100,7 @@ const CartComponent = () => {
 
             <button
               onClick={() => {
-                context.setTarget({
+                context?.setTarget({
                   name: "that will delete  all items you chose are you sure?",
                   func: async () => {
                     dispatch({ type: "cart/deleteall" });

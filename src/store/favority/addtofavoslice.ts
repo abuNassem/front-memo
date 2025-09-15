@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import actGetFavority from "./act/actgetfavority"
 import actDeleteFavority from "./act/actdeletefavority"
-import getAllFavo from "./act/getallfavo";
+import getAllFavo from "./act/actgetallfavo";
+import actPostFavority from "./act/actPostfavority";
 
 type TFavoItem = {
-  id: number;
+  _id: string;
   title: string;
   img: string;
+  owner:string
 }
 
 type TFavoState = {
@@ -22,7 +23,7 @@ const addFavoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(actGetFavority.fulfilled, (state, action: PayloadAction<TFavoItem[]>) => {
+    builder.addCase(actPostFavority.fulfilled, (state, action: PayloadAction<TFavoItem[]>) => {
       state.favorities =  action.payload ??[]
     })
     builder.addCase(actDeleteFavority.fulfilled, (state, action: PayloadAction<TFavoItem[]>) => {

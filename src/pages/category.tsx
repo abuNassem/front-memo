@@ -8,7 +8,7 @@ import { Tproduct } from '../store/custom/tproduct'
 const Category = () => {
   const  dispatch=useAppDispatch()
     const {loading,error,record}=useAppSelector(state => state.categories)
-  const localhost='https://back-last.onrender.com/'
+  const localhost='https://backmemo.onrender.com/'
 
   useEffect(()=>{
     dispatch(actGetCategories())
@@ -16,7 +16,6 @@ const Category = () => {
   
  useEffect(()=>{
      const hash=window.location.hash.substring(1)
-     console.log(hash)
      const ele=document.getElementById(hash)
      if(ele){
       ele.scrollIntoView({behavior:'smooth'})
@@ -30,7 +29,7 @@ const Category = () => {
  <Grid size={3} key={index}>
     <ListItem sx={{display:'flex',flexDirection:'column',gap:3}}>
       <Link className='flex flex-col items-center gap-2' to={`/product/${ele.title}`}>
- <img src={localhost+ele.img} className='rounded-full w-[100px] h-[100px]' loading='lazy' width={150} height={150} />
+ <img src={localhost+ele.img} className='rounded-full w-[100px] h-[100px]'  loading='lazy'  width={150} height={150} />
       <Typography variant='h5'>{ele.title}</Typography>
       </Link>
      

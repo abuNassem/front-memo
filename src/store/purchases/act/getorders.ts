@@ -4,8 +4,15 @@ import axios from "axios";
 
 const getOrders=createAsyncThunk('/purchases/getorders',
    async ()=>{
-        const res=await axios.get(`https://back-last.onrender.com/orders/${localStorage.getItem('email')}`)
+    try{
+         const res=await axios.get(`/api/orders`,{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
         return res.data
+    }catch(error){
+        if(error.status==401){
+            window.location.href='/login'
+        }
+    }
+       
     }
 )
 

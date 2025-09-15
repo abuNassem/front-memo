@@ -8,26 +8,26 @@ type ChosenResponse = {
 
 const actIncreaseChosen = createAsyncThunk<
   Tproduct[],        // return type لما ينجح
-  number,            // الباراميتر id
+  string,            // الباراميتر id
   { rejectValue: string } // نوع الخطأ
 >(
   "cart/actIncreasechosen",
   async (id, { rejectWithValue }) => {
     try {
-      const email = localStorage.getItem("email");
-      if (!email) {
-        return rejectWithValue("Email not found in localStorage");
-      }
-
+      
       const res = await axios.patch<ChosenResponse>(
-        `https://back-last.onrender.com/chosen/${email}/${id}`,
-        { mode: "inc" }
+        `/api/chosen/${id}`,
+        { mode: "inc" },
+                        {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}}
+
       );
 
       return res.data.items;
     } catch (err) {
+       if(err.response.status==401){
+        window.location.href='/login'
+      }
       const error = err as AxiosError;
-      console.error("Error in actIncreaseChosen:", error.message);
       return rejectWithValue(error.response?.data as string || error.message);
     }
   }

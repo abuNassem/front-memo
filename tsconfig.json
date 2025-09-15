@@ -16,6 +16,6 @@
     "jsx": "react-jsx",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "vite.config.js"],
   "exclude": ["node_modules"]
 }
