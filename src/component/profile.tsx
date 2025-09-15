@@ -37,7 +37,7 @@ export default function Profile() {
   const logout = async() => {
     handleClose();
     try{
- await axios.get('/api/logout',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
+ await axios.get('https://backmemo.onrender.com/logout',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
             localStorage.clear();
   context?.setAlert((prev) => ({
       ...prev,
