@@ -25,7 +25,7 @@ const Chosen = () => {
 
   const context = useContext(api);
 
-  const localhost = "https://back-last.onrender.com/";
+  const localhost = "https://backmemo.onrender.com/";
 
 
   // if there not chosen
