@@ -36,7 +36,8 @@ export default function Profile() {
   };
   const logout = async() => {
     handleClose();
-    await axios.get('/api/logout',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
+    try{
+ await axios.get('/api/logout',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
             localStorage.clear();
   context?.setAlert((prev) => ({
       ...prev,
@@ -47,6 +48,11 @@ export default function Profile() {
             
               window.location.href='/login'
   
+    }
+    catch(error){
+      console.log(error)
+    }
+   
 
   };
   return (
