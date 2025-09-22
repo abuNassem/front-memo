@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /login
+Disallow: /signup
+Allow: /
+Sitemap: https://commerce12s.netlify.app/sitemap.xml
